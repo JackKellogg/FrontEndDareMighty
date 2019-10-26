@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Config from '../config/index';
 
 const INITIAL_STATE = {
     jsonData:""
@@ -11,7 +12,11 @@ class Form extends Component {
         this.state = INITIAL_STATE;
     }
 
-
+    componentWillMount() {
+        fetch(Config.backendAPI).then((data)=>{
+            this.setState({jsonData:data})
+        })
+    }
 
     render() {
         let data = this.state.jsonData;
