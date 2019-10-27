@@ -44,8 +44,24 @@ def getAllBuildingNames():
     sales_data = pd.read_csv("datasets/Sales.csv", sep=",")
 
     print(sales_data['Bldg Name'].unique())
-    print(type(list(sales_data['Bldg Name'].unique())))
-    return list(sales_data['Bldg Name'].unique())
+    x = list(sales_data['Bldg Name'].unique())
+    x.pop(20)
+    print(x)
+    return x
+
+def getAllBuildingNamesReact():
+    names = getAllBuildingNames()
+    print(names)
+    entry = '{{label: "{0}"}},'
+    final = ""
+    print(final)
+    for name in names:
+        if name == "nan":
+            pass
+        final = final + entry.format(name)
+    final = "[" + final + "]"
+    print(final)
+    return final
 
 
 if __name__ == '__main__':
