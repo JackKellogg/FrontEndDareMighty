@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Button from '@material-ui/core/Button';
 
 const INITIAL_STATE = {
     response: false,
@@ -29,14 +30,22 @@ class Form extends Component {
         super(props);
 
         this.state = INITIAL_STATE;
-
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        console.log("Submitting" + nameChooser)
+        fetch(Config.backendAPI+ "search"+"?q=" + nameChooser).then(data=>data.json())
+        .then(jsonData => {
+            this.setState({jsonData:jsonData,response:true})
+        })
     }
 
     componentWillMount() {
         fetch(Config.backendAPI + 'allBuildingsForReact').then(data=>data.json())//data.json())
         .then(jsonData => {
             // this.setState({jsonData:jsonData,response:true})
-            this.setState({response:true})
+            // this.setState({response:true})
             let data = jsonData
             
             var z = JSON.stringify(data)
@@ -75,12 +84,6 @@ class Form extends Component {
       
 
     render() {
-        console.log("This is the DATA", this.state.options)
-        let info = {
-            "Address":"1234 Dumb St.",
-            "Name":"Jack's Building",
-            "Cost":"1,001,999,999,999,009"
-        }
 
         // let data = this.state.jsonData;
 //         var z = JSON.stringify(data)
@@ -93,10 +96,15 @@ class Form extends Component {
                 {/* <Snack /> */}
                 {/* <p>Returned Data:</p>
                 {JSON.stringify(data)} */}
-                {this.state.response ? <Response info={this.state.jsonData}/>:<p>No Data</p>}
-<IntegrationReactSelect options={this.state.options} />
+                <form onSubmit={this.handleSubmit}>
                 <FormSelection/>
-                <button/>
+                <IntegrationReactSelect options={this.state.options} />
+                <Button type="submit" variant="contained" color="primary">Go!</Button>
+
+                </form>
+                {this.state.response ? <Response info={this.state.jsonData}/>:<p>Please search for an entry above.</p>}
+                    
+                
                 
                 {/* {JSON.stringify(z)}//JSON.stringify(data)} */}
             </div>
@@ -112,45 +120,45 @@ class Form extends Component {
 
 
 
-const suggestions = [
-  { label: 'Afghanistan' },
-  { label: 'Aland Islands' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
+// const suggestions = [
+//   { label: 'Afghanistan' },
+//   { label: 'Aland Islands' },
+//   { label: 'Albania' },
+//   { label: 'Algeria' },
+//   { label: 'American Samoa' },
+//   { label: 'Andorra' },
+//   { label: 'Angola' },
+//   { label: 'Anguilla' },
+//   { label: 'Antarctica' },
+//   { label: 'Antigua and Barbuda' },
+//   { label: 'Argentina' },
+//   { label: 'Armenia' },
+//   { label: 'Aruba' },
+//   { label: 'Australia' },
+//   { label: 'Austria' },
+//   { label: 'Azerbaijan' },
+//   { label: 'Bahamas' },
+//   { label: 'Bahrain' },
+//   { label: 'Bangladesh' },
+//   { label: 'Barbados' },
+//   { label: 'Belarus' },
+//   { label: 'Belgium' },
+//   { label: 'Belize' },
+//   { label: 'Benin' },
+//   { label: 'Bermuda' },
+//   { label: 'Bhutan' },
+//   { label: 'Bolivia, Plurinational State of' },
+//   { label: 'Bonaire, Sint Eustatius and Saba' },
+//   { label: 'Bosnia and Herzegovina' },
+//   { label: 'Botswana' },
+//   { label: 'Bouvet Island' },
+//   { label: 'Brazil' },
+//   { label: 'British Indian Ocean Territory' },
+//   { label: 'Brunei Darussalam' },
+// ].map(suggestion => ({
+//   value: suggestion.label,
+//   label: suggestion.label,
+// }));
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -446,7 +454,7 @@ const components = {
   SingleValue,
   ValueContainer,
 };
-
+let nameChooser = "";
 const IntegrationReactSelect = (props) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -455,6 +463,8 @@ const IntegrationReactSelect = (props) => {
 
   const handleChangeSingle = value => {
     setSingle(value);
+    // console.log(value)
+    nameChooser = value.label;
   };
 
   const handleChangeMulti = value => {
