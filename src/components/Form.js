@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Config from '../config/index';
 
 const INITIAL_STATE = {
-    jsonData:""
+    jsonData:{}
 }
 
 class Form extends Component {
@@ -13,8 +13,12 @@ class Form extends Component {
     }
 
     componentWillMount() {
-        fetch(Config.backendAPI).then((data)=>{
-            this.setState({jsonData:data})
+        fetch(Config.backendAPI).then(data=>data.json())
+        .then(jsonData => {
+            this.setState({jsonData:jsonData})
+        })
+        .catch(e => {
+            console.log("Error! ", e);
         })
     }
 
@@ -23,7 +27,7 @@ class Form extends Component {
         return(
             <div>
                 <p>Returned Data:</p>
-                {data}
+                {JSON.stringify(data)}
             </div>
         )
     }
