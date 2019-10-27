@@ -28,5 +28,13 @@ def getAllBuildings():
     return jsonify(building_names)
 
 
+@app.route('/allBuildingsForReact')
+def getAllBuildingsReact():
+    building_names = dm.getAllBuildingNamesReact()
+    print("flask :\n", building_names)
+    data = {"data": building_names}
+    return jsonify(data)
+
+
 if __name__ == "__main__":
     app.run()
