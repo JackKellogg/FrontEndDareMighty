@@ -13,7 +13,8 @@ def get_info(building_name):
     # print(sales_data['PropertyID'].where(sales_data['Bldg Name'] == 'Aon Center'))
     things_i_need = ['Bldg Name', 'Address', 'City', 'Submarket', 'Market', 'Bldg Class', 'Bldg Type',
                      'Bldg Subtype', 'Stories', 'Bldg Size at Sale',
-                     'Sale Status', 'Sales Price', 'Renovated Date'
+                     'Sale Status', 'Sales Price', 'Renovated Date',
+                     'Latitude', 'Longitude'
                      ]
     x = sales_data[sales_data['Bldg Name'] == building_name][things_i_need]  # SELECT B FROM df WHERE A = 2
     print(x)
@@ -24,9 +25,8 @@ def get_info(building_name):
     all_the_data = {}
     for thing in things_i_need:
         all_the_data[thing] = ""+str(np.array((x[thing]))[0])
-        if type(np.array((x[thing]))[0]) == "<class 'numpy.int64'>":
-            print("got em")
-            all_the_data[thing] = int(np.array((x[thing]))[0])
+        if thing == "Latitude" or thing == "Longitude":
+            all_the_data[thing] = int(all_the_data[thing])
         print(type(all_the_data[thing]))
     print(all_the_data)
     json_data = "" #json.dumps(all_the_data)
@@ -52,14 +52,14 @@ def getAllBuildingNames():
 def getAllBuildingNamesReact():
     names = getAllBuildingNames()
     print(names)
-    entry = '{{label: "{0}"}},'
+    entry = '{{"label": "{0}"}},'
     final = ""
     print(final)
     for name in names:
         if name == "nan":
             pass
         final = final + entry.format(name)
-    final = "[" + final + "]"
+    final = "[" + final[:-1] + "]"
     print(final)
     return final
 
