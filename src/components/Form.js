@@ -24,10 +24,14 @@ class Form extends Component {
 
     render() {
         let data = this.state.jsonData;
+        var z = JSON.stringify(data)
+//        var re = new RegExp(, 'g');
+        z = z.replace(/\\\"/g, "\"")
+        console.log(z)
         return(
             <div>
                 <p>Returned Data:</p>
-                {JSON.stringify(data)}
+                {JSON.stringify(z)}//JSON.stringify(data)}
             </div>
         )
     }
