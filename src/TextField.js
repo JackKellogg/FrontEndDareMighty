@@ -1,10 +1,4 @@
-import React, {Component} from 'react';
-import Config from '../config/index';
-import Response from './Response';
-import { parse } from '@babel/parser';
-// import Snack from './snack';
-import FormSelection from './FormSelection';
-import button from './button';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Select from 'react-select';
@@ -16,158 +10,52 @@ import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
-import Button from '@material-ui/core/Button';
 
-const INITIAL_STATE = {
-    response: false,
-    name:"",
-    options:[],
-    jsonData:{}
-}
-
-class Form extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = INITIAL_STATE;
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    handleSubmit(event){
-        event.preventDefault();
-        console.log("Submitting" + nameChooser)
-        fetch(Config.backendAPI+ "search"+"?q=" + nameChooser).then(data=>data.json())
-        .then(jsonData => {
-            this.setState({jsonData:jsonData,response:true})
-        })
-    }
-
-    componentWillMount() {
-        fetch(Config.backendAPI + 'allBuildingsForReact').then(data=>data.json())//data.json())
-        .then(jsonData => {
-            // this.setState({jsonData:jsonData,response:true})
-            // this.setState({response:true})
-            let data = jsonData
-            
-            var z = JSON.stringify(data)
-//        var re = new RegExp(, 'g');
-            z = z.replace(/\\\"/g, "\"");
-            console.log(z)
-            z = z.substring(1, z.length-1);
-            z = JSON.parse(z)
-            // console.log("Data!!!J!"+ JSON.parse(z))
-            // z = JSON.parse(z);
-            // console.log(z.data);
-            // console.log("parsing",JSON.parse(z.data))
-            const y = z.map(x=>({
-                    value: x.label,
-                    label: x.label,
-                  }));
-                //   console.log("THIS IS Y:" + y)
-            this.setState({options:y});
-            // console.log(jsonData)
-            // console.log(JSON.parse(jsonData.data))
-            // const options = z.map(x=>({
-            //     value: x.label,
-            //     label: x.label,
-            //   })
-
-            // );
-            // console.log(options);
-            // this.setState({jsonData:jsonData,response:true})
-        })
-        .catch(e => {
-            this.setState({error: true});
-            console.log("Error! ", e);
-        })
-    }
-
-      
-
-    render() {
-
-        // let data = this.state.jsonData;
-//         var z = JSON.stringify(data)
-// //        var re = new RegExp(, 'g');
-//         z = z.replace(/\\\"/g, "\"")
-        // console.log(z)
-        return(
-            
-            <div>
-                <h1>Chattel</h1>
-                {/* <Snack /> */}
-                {/* <p>Returned Data:</p>
-                {JSON.stringify(data)} */}
-                <form onSubmit={this.handleSubmit}>
-                <FormSelection/>
-                <IntegrationReactSelect options={this.state.options} />
-                <Button type="submit" variant="contained" color="primary">Go!</Button>
-
-                </form>
-                <br />
-                {this.state.response ? <Response info={this.state.jsonData}/>:<p>Please search for an entry above.</p>}
-
-                
-                {/* <button /> */}
-                {/* {JSON.stringify(z)}//JSON.stringify(data)} */}
-            </div>
-
-        )
-    }
-}
-
-
-
-
-
-
-
-
-// const suggestions = [
-//   { label: 'Afghanistan' },
-//   { label: 'Aland Islands' },
-//   { label: 'Albania' },
-//   { label: 'Algeria' },
-//   { label: 'American Samoa' },
-//   { label: 'Andorra' },
-//   { label: 'Angola' },
-//   { label: 'Anguilla' },
-//   { label: 'Antarctica' },
-//   { label: 'Antigua and Barbuda' },
-//   { label: 'Argentina' },
-//   { label: 'Armenia' },
-//   { label: 'Aruba' },
-//   { label: 'Australia' },
-//   { label: 'Austria' },
-//   { label: 'Azerbaijan' },
-//   { label: 'Bahamas' },
-//   { label: 'Bahrain' },
-//   { label: 'Bangladesh' },
-//   { label: 'Barbados' },
-//   { label: 'Belarus' },
-//   { label: 'Belgium' },
-//   { label: 'Belize' },
-//   { label: 'Benin' },
-//   { label: 'Bermuda' },
-//   { label: 'Bhutan' },
-//   { label: 'Bolivia, Plurinational State of' },
-//   { label: 'Bonaire, Sint Eustatius and Saba' },
-//   { label: 'Bosnia and Herzegovina' },
-//   { label: 'Botswana' },
-//   { label: 'Bouvet Island' },
-//   { label: 'Brazil' },
-//   { label: 'British Indian Ocean Territory' },
-//   { label: 'Brunei Darussalam' },
-// ].map(suggestion => ({
-//   value: suggestion.label,
-//   label: suggestion.label,
-// }));
+const suggestions = [
+  { label: 'Afghanistan' },
+  { label: 'Aland Islands' },
+  { label: 'Albania' },
+  { label: 'Algeria' },
+  { label: 'American Samoa' },
+  { label: 'Andorra' },
+  { label: 'Angola' },
+  { label: 'Anguilla' },
+  { label: 'Antarctica' },
+  { label: 'Antigua and Barbuda' },
+  { label: 'Argentina' },
+  { label: 'Armenia' },
+  { label: 'Aruba' },
+  { label: 'Australia' },
+  { label: 'Austria' },
+  { label: 'Azerbaijan' },
+  { label: 'Bahamas' },
+  { label: 'Bahrain' },
+  { label: 'Bangladesh' },
+  { label: 'Barbados' },
+  { label: 'Belarus' },
+  { label: 'Belgium' },
+  { label: 'Belize' },
+  { label: 'Benin' },
+  { label: 'Bermuda' },
+  { label: 'Bhutan' },
+  { label: 'Bolivia, Plurinational State of' },
+  { label: 'Bonaire, Sint Eustatius and Saba' },
+  { label: 'Bosnia and Herzegovina' },
+  { label: 'Botswana' },
+  { label: 'Bouvet Island' },
+  { label: 'Brazil' },
+  { label: 'British Indian Ocean Territory' },
+  { label: 'Brunei Darussalam' },
+].map(suggestion => ({
+  value: suggestion.label,
+  label: suggestion.label,
+}));
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     height: 250,
     minWidth: 290,
-    
   },
   input: {
     display: 'flex',
@@ -457,8 +345,8 @@ const components = {
   SingleValue,
   ValueContainer,
 };
-let nameChooser = "";
-const IntegrationReactSelect = (props) => {
+
+export default function IntegrationReactSelect() {
   const classes = useStyles();
   const theme = useTheme();
   const [single, setSingle] = React.useState(null);
@@ -466,8 +354,6 @@ const IntegrationReactSelect = (props) => {
 
   const handleChangeSingle = value => {
     setSingle(value);
-    // console.log(value)
-    nameChooser = value.label;
   };
 
   const handleChangeMulti = value => {
@@ -492,26 +378,38 @@ const IntegrationReactSelect = (props) => {
           styles={selectStyles}
           inputId="react-select-single"
           TextFieldProps={{
-            label: 'Property Name',
+            label: 'Country',
             InputLabelProps: {
               htmlFor: 'react-select-single',
               shrink: true,
             },
           }}
-          placeholder="Search a property name"
-          options={props.options}
+          placeholder="Search a country (start with a)"
+          options={suggestions}
           components={components}
           value={single}
           onChange={handleChangeSingle}
         />
         <div className={classes.divider} />
-        
+        <Select
+          classes={classes}
+          styles={selectStyles}
+          inputId="react-select-multiple"
+          TextFieldProps={{
+            label: 'Countries',
+            InputLabelProps: {
+              htmlFor: 'react-select-multiple',
+              shrink: true,
+            },
+          }}
+          placeholder="Select multiple countries"
+          options={suggestions}
+          components={components}
+          value={multi}
+          onChange={handleChangeMulti}
+          isMulti
+        />
       </NoSsr>
     </div>
   );
 }
-
-
-
-
-export default Form;
