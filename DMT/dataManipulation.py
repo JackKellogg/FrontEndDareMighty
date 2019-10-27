@@ -52,14 +52,14 @@ def getAllBuildingNames():
 def getAllBuildingNamesReact():
     names = getAllBuildingNames()
     print(names)
-    entry = '{{label: "{0}"}},'
+    entry = '{{"label": "{0}"}},'
     final = ""
     print(final)
     for name in names:
         if name == "nan":
             pass
         final = final + entry.format(name)
-    final = "[" + final + "]"
+    final = "[" + final[:-1] + "]"
     print(final)
     return final
 

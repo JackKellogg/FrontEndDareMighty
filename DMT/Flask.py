@@ -33,7 +33,7 @@ def getAllBuildingsReact():
     building_names = dm.getAllBuildingNamesReact()
     print("flask :\n", building_names)
     data = {"data": building_names}
-    return jsonify(data)
+    return jsonify(building_names)
 
 
 if __name__ == "__main__":
