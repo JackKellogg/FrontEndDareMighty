@@ -2,7 +2,8 @@ import pandas as pd
 import json
 import numpy as np
 
-def fn():
+
+def get_info(building_name):
     lease_data = pd.read_csv("datasets/Lease.csv", sep=",")
     availability_data = pd.read_csv("datasets/Availability.csv", sep=",")
     property_data = pd.read_csv("datasets/Property.csv", sep=",")
@@ -14,7 +15,10 @@ def fn():
                      'Bldg Subtype', 'Stories', 'Bldg Size at Sale',
                      'Sale Status', 'Sales Price', 'Renovated Date'
                      ]
-    x = sales_data[sales_data['Bldg Name'] == 'AON Center'][things_i_need]  # SELECT B FROM df WHERE A = 2
+    x = sales_data[sales_data['Bldg Name'] == building_name][things_i_need]  # SELECT B FROM df WHERE A = 2
+    print(x)
+    if x.empty:
+        return "No such thing"
 
     print("------------")
     all_the_data = {}
@@ -33,5 +37,16 @@ def fn():
     return all_the_data
 
 
+def getAllBuildingNames():
+    lease_data = pd.read_csv("datasets/Lease.csv", sep=",")
+    availability_data = pd.read_csv("datasets/Availability.csv", sep=",")
+    property_data = pd.read_csv("datasets/Property.csv", sep=",")
+    sales_data = pd.read_csv("datasets/Sales.csv", sep=",")
+
+    print(sales_data['Bldg Name'].unique())
+    print(type(list(sales_data['Bldg Name'].unique())))
+    return list(sales_data['Bldg Name'].unique())
+
+
 if __name__ == '__main__':
-    fn()
+    getAllBuildingNames()
