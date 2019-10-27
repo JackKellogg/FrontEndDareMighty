@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Config from '../config/index';
+import FormSelection from './FormSelection';
+import button from './button';
 
 const INITIAL_STATE = {
     jsonData:{}
@@ -22,13 +24,21 @@ class Form extends Component {
         })
     }
 
+    
+      
+
     render() {
         let data = this.state.jsonData;
         return(
             <div>
                 <p>Returned Data:</p>
                 {JSON.stringify(data)}
+
+                <FormSelection/>
+                <button/>
+                
             </div>
+
         )
     }
 }
