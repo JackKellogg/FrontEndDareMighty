@@ -102,10 +102,11 @@ class Form extends Component {
                 <Button type="submit" variant="contained" color="primary">Go!</Button>
 
                 </form>
+                <br />
                 {this.state.response ? <Response info={this.state.jsonData}/>:<p>Please search for an entry above.</p>}
-                    
+
                 
-                
+                {/* <button /> */}
                 {/* {JSON.stringify(z)}//JSON.stringify(data)} */}
             </div>
 
