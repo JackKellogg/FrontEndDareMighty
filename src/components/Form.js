@@ -93,6 +93,7 @@ class Form extends Component {
         return(
             
             <div>
+                <h1>Chattel</h1>
                 {/* <Snack /> */}
                 {/* <p>Returned Data:</p>
                 {JSON.stringify(data)} */}
@@ -166,6 +167,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     height: 250,
     minWidth: 290,
+    
   },
   input: {
     display: 'flex',
