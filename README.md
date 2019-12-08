@@ -1,8 +1,8 @@
 # Dare Mighty Things Hackathon (November 2019)
-##JLL Database
+## JLL Dataset
 Query the database and comeup with a sales pitch for a roker to read and get some insights on the site they are trying to sell.
 
-**Front-end** : ReactJS, HTML5, CSS3
+**Front-end** : ReactJS, HTML5, CSS3<br/>
 **Back-end** : Python, Flask, NodeJS
 
 We implemented a system where we query the test database we were given to us and come up with the different important information that was available.
